@@ -8,13 +8,13 @@ import requests
 import zipfile
 import re
 
-zip_url = "http://www.pythonchallenge.com/pc/def/channel.zip"
-r = requests.get(zip_url)
-
 try:
     open('channel.zip', 'r')
     pass
 except FileNotFoundError:
+    zip_url = "http://www.pythonchallenge.com/pc/def/channel.zip"
+    r = requests.get(zip_url)
+
     with open('channel.zip', 'wb') as f:
         f.write(r.content)
 
