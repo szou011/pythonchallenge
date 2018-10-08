@@ -20,24 +20,21 @@ except FileNotFoundError:
 
 z = zipfile.ZipFile('channel.zip')
 
-z_list = [x.filename for x in z.infolist()]
+# z_list = [x.filename for x in z.infolist()]
 
-# construt a dict to inclde txt file name and the next number
-
-pair_dict = {}
+filename = '90052'
 re_ptn = re.compile(r'\d+')
+comments = list()
 
-for txtfile in z_list:
-    with z.open(txtfile, 'r') as txt:
-        try:
-            pair_dict[txtfile] = re_ptn.search(txt.read().decode('utf-8')).group()
-        except:
-            pass
-
-# start with 90052
-
-start = '90052'
 while True:
-    print(pair_dict[start + '.txt'])
-    start = str(pair_dict[start + '.txt'])
+    with z.open(filename + '.txt', 'r') as txt:
+        content = txt.read().decode('utf-8')
+        print(content)
+        comments.append(z.getinfo(filename + '.txt').comment.decode('utf-8'))
 
+        match = re_ptn.search(content)
+        if match == None:
+            break
+        filename = match.group()
+for i in comments:
+    print(i, end="")
