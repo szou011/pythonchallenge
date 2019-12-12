@@ -20,8 +20,6 @@ except FileNotFoundError:
 
 z = zipfile.ZipFile('channel.zip')
 
-# z_list = [x.filename for x in z.infolist()]
-
 filename = '90052'
 re_ptn = re.compile(r'\d+')
 comments = list()
@@ -33,7 +31,7 @@ while True:
         comments.append(z.getinfo(filename + '.txt').comment.decode('utf-8'))
 
         match = re_ptn.search(content)
-        if match == None:
+        if match is None:
             break
         filename = match.group()
 for i in comments:
